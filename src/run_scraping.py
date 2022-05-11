@@ -13,7 +13,7 @@ django.setup()
 
 from scraping.parsers import *
 
-from scraping.models import Vacancy, City, Language, Error, Url
+from scraping.models import Vacancy, Error, Url
 
 User = get_user_model()
 
@@ -37,8 +37,10 @@ def get_urls(_settings):
         tmp = {}
         tmp['city'] = pair[0]
         tmp['language'] = pair[1]
-        tmp['url_data'] = url_dict[pair]
-        urls.append(tmp)
+        url_data = url_dict.get(pair)
+        if url_data:
+            tmp['url_data'] = url_dict[pair]
+            urls.append(tmp)
     return urls
 
 settings = get_settings()
@@ -51,7 +53,6 @@ url_list = get_urls(settings)
 jobs, errors = [], []
 
 for data in url_list:
-
 
     for func, key in parsers:
         url = data['url_data'][key]
