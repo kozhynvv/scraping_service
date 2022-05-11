@@ -7,9 +7,9 @@
 {% for object in object_list %}
 
     <div class="card my-4">
-      <h5 class="card-header text-center"><a href="{{ object.url }}" >{{ object.title }}</a></h5>
+      <h6 class="card-header text-center"><a href="{{ object.url }}" >{{ object.title }}</a></h6>
       <div class="card-body">
-          <h4>{{ object.company }}</h4>
+          <h6>{{ object.company }}</h6>
         <p class="card-text">{{ object.description }}</p>
           <p class="text-center">{{object.city.name}} | {{object.language.name}} |
               <small>{{object.timestamp|date:'d-m-Y'}}</small></p>

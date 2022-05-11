@@ -3,7 +3,6 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import UserManager
 
 
-
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -14,7 +13,7 @@ class MyUserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
 
         user = self.model(
-            email=self.normalize_email(email),
+            email=self.normalize_email(email)
         )
 
         user.set_password(password)
@@ -28,7 +27,7 @@ class MyUserManager(BaseUserManager):
         """
         user = self.create_user(
             email,
-            password=password,
+            password=password
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -42,9 +41,13 @@ class MyUser(AbstractBaseUser):
     )
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    city = models.ForeignKey('scraping.City', on_delete=models.SET_NULL, null=True, blank=True)
-    language = models.ForeignKey('scraping.Language', on_delete=models.SET_NULL, null=True, blank=True)
+    city = models.ForeignKey('scraping.City', on_delete=models.SET_NULL,
+                             null=True, blank=True)
+    language = models.ForeignKey('scraping.Language', on_delete=models.SET_NULL,
+                                 null=True, blank=True)
     send_email = models.BooleanField(default=True)
+
+
     
     objects = MyUserManager()
 
